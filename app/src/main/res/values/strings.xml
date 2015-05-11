@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">WeMakeBeauty</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_splash_view">SplashView</string>
+    <string name="title_activity_map_view">MapView</string>
+    <string name="title_activity_rank_view">RankView</string>
+    <string name="title_activity_beau_talk_view">BeauTalkView</string>
+    <string name="title_activity_community_view">CommunityView</string>
+    <string name="title_activity_writing_view">WritingView</string>
+    <string name="dopen">open</string>
+    <string name="dclose">close</string>
+    <string name="title_activity_examine">Examine</string>
+
+
+    <string name="google_map_key">AIzaSyDR-GCTBaemUS9bLKj2UrhcGieMw9vKKfQ</string>
+    <string name="google_map_key_mac"> AIzaSyAjoqqq16tlzdYsQAET1vvlb-MK4uLaLSo</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_sign_in">SignIn</string>
+
+    <string name="signup">Sign Up</string>
+    <string name="signin">Log In</string>
+    <string name="findpasswd">Lost and Find</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="nickname">Nickname</string>
+    <string name="birth">Birth</string>
+    <string name="selfie">Selfie</string>
+    <string name="title_activity_products">Products</string>
+    <string name="title_activity_review">Review</string>
+    <string name="title_activity_writing">Writing</string>
+    <string name="title_activity_detail">Detail</string>
+    <string name="title_activity_write_beautalk">WriteBeautalk</string>
+    <string name="title_activity_basic">Basic</string>
+    <string name="title_activity_beau_talk_item">BeauTalkItem</string>
+
+
+</resources>

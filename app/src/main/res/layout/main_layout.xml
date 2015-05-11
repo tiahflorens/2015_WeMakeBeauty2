@@ -1,0 +1,156 @@
+<!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main">
+
+
+    <!-- android:layout_gravity="start" tells DrawerLayout to treat
+         this as a sliding drawer on the left side for left-to-right
+         languages and on the right side for right-to-left languages.
+         If you're not building against API 17 or higher, use
+         android:layout_gravity="left" instead. -->
+    <!-- The drawer is given a fixed width in dp and extends the full height of
+         the container. -->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/cv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/main_imgBbtn0"
+                android:layout_width="fill_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/mainview_menu1"
+                android:layout_marginBottom="20dp"
+                />
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/main_imgBbtn1"
+                android:layout_width="fill_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/mainview_menu2"
+                android:layout_marginBottom="20dp"
+                />
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/main_imgBbtn2"
+                android:layout_width="fill_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/mainview_menu3"
+                android:layout_marginBottom="20dp"
+                />
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/main_imgBbtn3"
+                android:layout_width="fill_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/dd"
+                android:layout_marginBottom="20dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+    <!--<ListView
+        android:id="@+id/home_lv_drawer1"
+        android:layout_width="305dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#EDEDED"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+
+        />-->
+
+    <LinearLayout
+        android:id="@+id/drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/background_light"
+        android:choiceMode="singleChoice"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dip"
+            android:src="@drawable/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                android:layout_gravity="top"
+                android:src="@drawable/ic_launcher"
+                android:id="@+id/drawer_img_selfie"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/drawer_tv_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="type"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="typerecheck"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="notice"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="alarm"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <ImageButton
+                    android:id="@+id/drawer_ibtn_signout"
+                    android:layout_width="100dip"
+                    android:layout_height="50dip"
+                    android:layout_gravity="end" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.v4.widget.DrawerLayout>
