@@ -35,7 +35,7 @@ public class Examine extends ActionBarActivity {
     private static final int CROP_FROM_CAMERA = 2;
     private Uri mImageCaptureUri;
     private ImageView imgView;
-    private ImageButton ibtnDone ,ibtnTake;
+    private ImageButton ibtnDone, ibtnTake;
     private TextView tvResult;
     private Preferences prefs;
     private Gson gson;
@@ -48,21 +48,22 @@ public class Examine extends ActionBarActivity {
         setContentView(R.layout.examine_layout);
         initComponent();
         addActions();
-     }
+    }
 
-    private void initComponent(){
-        context= this;
+    private void initComponent() {
+        context = this;
         prefs = new Preferences(context);
         gson = new Gson();
-        imgView = (ImageView)findViewById(R.id.examine_imgv_photo);
-        ibtnDone= (ImageButton)findViewById(R.id.examine_ibtn_done);
-        ibtnTake =(ImageButton)findViewById(R.id.examine_ibtn_take);
-        tvResult =(TextView)findViewById(R.id.examine_tv_result);
+        imgView = (ImageView) findViewById(R.id.examine_imgv_photo);
+        ibtnDone = (ImageButton) findViewById(R.id.examine_ibtn_done);
+        ibtnTake = (ImageButton) findViewById(R.id.examine_ibtn_take);
+        tvResult = (TextView) findViewById(R.id.examine_tv_result);
         setVisibleDone(false);
 
 
     }
-    private void addActions(){
+
+    private void addActions() {
         ibtnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +78,7 @@ public class Examine extends ActionBarActivity {
             }
         });
     }
+
     private void doTakePhotoAction() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -92,12 +94,13 @@ public class Examine extends ActionBarActivity {
     }
 
 
-    public void request(byte[] pic){
+    public void request(byte[] pic) {
         int uid = prefs.getInt(Tags.USER_ID);
-        UserItem user = new UserItem(uid,pic);
+        UserItem user = new UserItem(uid, pic);
 
         new AsyncTask<String, Void, String>() {
             ProgressDialog pd;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -110,8 +113,9 @@ public class Examine extends ActionBarActivity {
             @Override
             protected String doInBackground(String... params) {
 
-                return new NetworkHandler().sendRequest(Tags.USER ,Tags.USER_EXAMINE , params[0]);
+                return new NetworkHandler().sendRequest(Tags.USER, Tags.USER_EXAMINE, params[0]);
             }
+
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
@@ -134,16 +138,16 @@ public class Examine extends ActionBarActivity {
 
     public void handleResponse(boolean b, String msg) {
         if (!b)
-             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void handleResponse(UserItem user) {
 
         if (user.isDone()) {//서버측에서 작업을 성공했다면
             setVisibleDone(true);
-            tvResult.setText("type : " + user.getType() + "\n"+ "shape : " + user.getShape());
+            tvResult.setText("type : " + user.getType() + "\n" + "shape : " + user.getShape());
             prefs.save(Tags.SHAPE, user.getShape());
-            prefs.save(Tags.TYPE , user.getType());
+            prefs.save(Tags.TYPE, user.getType());
 
             log("shape and type saved");
 
@@ -151,8 +155,8 @@ public class Examine extends ActionBarActivity {
 
     }
 
-    public void setVisibleDone(boolean b){
-        if(b)
+    public void setVisibleDone(boolean b) {
+        if (b)
             ibtnDone.setVisibility(View.VISIBLE);
 
         else
@@ -180,7 +184,7 @@ public class Examine extends ActionBarActivity {
                     //bytePhoto = stream.toByteArray();
                     imgView.setImageBitmap(photo);
                     request(stream.toByteArray());
-                 }
+                }
 
                 // 임시 파일 삭제
                 File f = new File(mImageCaptureUri.getPath());
@@ -219,11 +223,7 @@ public class Examine extends ActionBarActivity {
     }
 
 
-
-
-
-
-    private void moveToMain(){
+    private void moveToMain() {
 
         Intent intent = new Intent(this, Main.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -236,7 +236,6 @@ public class Examine extends ActionBarActivity {
         Log.d("tiah", " examine : " + msg);
 
     }
-
 
 
     @Override

@@ -35,7 +35,7 @@ public class Splash extends ActionBarActivity {
                 if (prefs.getBoolean()) {
 
 
-                    Log.d("tiah" , " getint type : " + prefs.getInt(Tags.TYPE) + "  " +(prefs.getInt(Tags.TYPE) > 0));
+                    Log.d("tiah", " getint type : " + prefs.getInt(Tags.TYPE) + "  " + (prefs.getInt(Tags.TYPE) > 0));
                     if (prefs.getInt(Tags.TYPE) > 0) {
                         startActivity(new Intent(Splash.this, Main.class));
                     } else

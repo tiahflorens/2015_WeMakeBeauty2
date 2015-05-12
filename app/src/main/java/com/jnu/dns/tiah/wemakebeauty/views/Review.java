@@ -99,11 +99,11 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
                         log("onScroll reached bottom  : " + mLockListView);
                         log("visible item count : " + visibleItemCount);
 
-                        if(list.size()>visibleItemCount)
-                        if (searchFlag)
-                            requestSearchReviews();
-                        else
-                            requestNormalReviews();
+                        if (list.size() > visibleItemCount)
+                            if (searchFlag)
+                                requestSearchReviews();
+                            else
+                                requestNormalReviews();
                         //testAdd();
                     }
 
@@ -257,7 +257,7 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
         switch (id) {
             case R.id.write:
 
-                startActivity(new Intent(Review.this , ReviewWrite.class));
+                startActivity(new Intent(Review.this, ReviewWrite.class));
                 Toast.makeText(context, "write actionbar!", Toast.LENGTH_SHORT).show();
                 break;
 

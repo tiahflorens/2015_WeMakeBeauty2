@@ -19,7 +19,6 @@ import com.jnu.dns.tiah.wemakebeauty.R;
 import com.jnu.dns.tiah.wemakebeauty.adapters.BeauTalkAdapter;
 import com.jnu.dns.tiah.wemakebeauty.items.BeauTalkItem;
 import com.jnu.dns.tiah.wemakebeauty.others.NetworkHandler;
-import com.jnu.dns.tiah.wemakebeauty.others.Preferences;
 import com.jnu.dns.tiah.wemakebeauty.others.Tags;
 
 import java.util.ArrayList;
@@ -31,7 +30,8 @@ public class BeauTalk extends ActionBarActivity {
     private Context context;
     private ArrayList<BeauTalkItem> list;
     private BeauTalkAdapter adapter;
-    private  ListView lv;
+    private ListView lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +44,10 @@ public class BeauTalk extends ActionBarActivity {
         refreshList();
     }
 
-    private void init(){
+    private void init() {
         list = new ArrayList<>();
-       lv = (ListView)findViewById(R.id.beauty_lv_list);
-        adapter = new BeauTalkAdapter(list,context);
+        lv = (ListView) findViewById(R.id.beauty_lv_list);
+        adapter = new BeauTalkAdapter(list, context);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,8 +71,8 @@ public class BeauTalk extends ActionBarActivity {
                             && lv.getChildAt(lv.getChildCount() - 1).getBottom() <= lv.getHeight()) {
 
 
-                        if(list.size()>visibleItemCount)
-                           refreshList();
+                        if (list.size() > visibleItemCount)
+                            refreshList();
 
                     }
 
@@ -81,7 +81,7 @@ public class BeauTalk extends ActionBarActivity {
         });
     }
 
-    public void moveToDetailPage(int bid){
+    public void moveToDetailPage(int bid) {
         Log.d("tiah", " beautalk . move to detail page");
         Intent intent = new Intent(BeauTalk.this, BeauTalkDetail.class);
         intent.putExtra("bid", bid);
@@ -89,9 +89,7 @@ public class BeauTalk extends ActionBarActivity {
     }
 
     private void refreshList() {
-        Preferences prefs = new Preferences(context);
-
-        BeauTalkItem bea = new BeauTalkItem( getIdx());
+        BeauTalkItem bea = new BeauTalkItem(getIdx());
         String[] params = {Tags.BEAUTY_READALL, new Gson().toJson(bea)};
         sendRequest(params);
 
@@ -127,16 +125,17 @@ public class BeauTalk extends ActionBarActivity {
         }.execute(p);
     }
 
-    public void handleResponse(String raw){
-        if(raw ==null)
+    public void handleResponse(String raw) {
+        if (raw == null)
             return;
-        BeauTalkItem item = new Gson().fromJson(raw,BeauTalkItem.class);
+        BeauTalkItem item = new Gson().fromJson(raw, BeauTalkItem.class);
 
         setIdx(item.getId());
         list.addAll(item.getSet());
         adapter.notifyDataSetChanged();
 
     }
+
     public int getIdx() {
         return idx;
     }
@@ -168,7 +167,7 @@ public class BeauTalk extends ActionBarActivity {
 
     private void write() {
 
-        startActivity(new Intent(BeauTalk.this , BeautalkWrite.class));
+        startActivity(new Intent(BeauTalk.this, BeautalkWrite.class));
 
 
     }

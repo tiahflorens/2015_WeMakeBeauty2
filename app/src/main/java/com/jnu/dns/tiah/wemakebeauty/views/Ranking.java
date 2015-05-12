@@ -121,8 +121,8 @@ public class Ranking extends ActionBarActivity {
 
 
     public void handleResponse(String raw) {
-        if(raw == null)
-            return ;
+        if (raw == null)
+            return;
         ReviewItem rev = new Gson().fromJson(raw, ReviewItem.class);
 
         skinList.addAll(rev.getSkinList());

@@ -61,7 +61,7 @@ public class ReviewWrite extends ActionBarActivity {
             }
         });
 
-        RadioButton rb1 = (RadioButton)findViewById(R.id.write_review_rb_option1);
+        RadioButton rb1 = (RadioButton) findViewById(R.id.write_review_rb_option1);
         rb1.setText("SKIN TYPE");
         rb1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,7 @@ public class ReviewWrite extends ActionBarActivity {
             }
         });
 
-        RadioButton rb2 = (RadioButton)findViewById(R.id.write_review_rb_option2);
+        RadioButton rb2 = (RadioButton) findViewById(R.id.write_review_rb_option2);
         rb2.setText("SKIN TONE");
         rb2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,11 +90,11 @@ public class ReviewWrite extends ActionBarActivity {
 
     }
 
-    public void temp(){
-        etBrand.setText("brand  " + ((int)(Math.random()*10)%3));
-        etProduct.setText("product "+ ((int)(Math.random()*10)%3));
-        etTitle.setText("title " + ((int)(Math.random()*10)%3));
-        etMemo.setText("memo"+ ((int)(Math.random()*10)%3));
+    public void temp() {
+        etBrand.setText("brand  " + ((int) (Math.random() * 10) % 3));
+        etProduct.setText("product " + ((int) (Math.random() * 10) % 3));
+        etTitle.setText("title " + ((int) (Math.random() * 10) % 3));
+        etMemo.setText("memo" + ((int) (Math.random() * 10) % 3));
         etPrice.setText("1500");
 
     }
@@ -114,9 +114,9 @@ public class ReviewWrite extends ActionBarActivity {
             toast("빈칸을 채워주세요");
             return;
         }
-        if(getCategory()==0) {
+        if (getCategory() == 0) {
             toast("종류를 선택해주세요!");
-            return ;
+            return;
         }
         Preferences prefs = new Preferences(context);
 
@@ -179,11 +179,9 @@ public class ReviewWrite extends ActionBarActivity {
 
         toast("작성이 완료되었습니다");
 
-        if(rev.isDone())
+        if (rev.isDone())
             this.finish();
     }
-
-
 
 
     @Override

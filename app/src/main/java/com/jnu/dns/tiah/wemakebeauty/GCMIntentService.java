@@ -10,6 +10,9 @@ import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class GCMIntentService extends GCMBaseIntentService {
 
     Context context;
@@ -20,7 +23,12 @@ public class GCMIntentService extends GCMBaseIntentService {
     }
 
 
-    private void sendNotification() {
+    private void sendNotification(String due, String brand) {
+
+
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(Long.parseLong(due));
+
         //알림상태바에 알림을 추가합니다.
         NotificationManager mNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -29,20 +37,21 @@ public class GCMIntentService extends GCMBaseIntentService {
         // mBuilder.setContentIntent(contentIntent);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 this).setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("GCM Notification")
+                .setContentTitle(brand)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText("new message"))
-                .setContentText("new message");
+                .setContentText(  c.get(Calendar.MONTH) +"-"+c.get(Calendar.DATE) + " 까지 세일해요!");
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
-    private void sendNotification(String raw) {
+    private void sendNotification(String due, String brand,int i) {
 
 
         //알림상태바에 알림을 추가합니다.
 
 
+
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(R.mipmap.ic_launcher, "New Message!", System.currentTimeMillis());
+        Notification notification = new Notification(R.mipmap.ic_launcher, due, System.currentTimeMillis());
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notification.defaults = Notification.DEFAULT_SOUND;// | Notification.DEFAULT_VIBRATE ;
         notification.number = 13;
@@ -51,7 +60,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         // /Intent intent =new Intent(this, DialogView.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         //intent.putExtra("id",msg.getFromEmail());
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //notification.setLatestEventInfo(this, msg.getFromEmail(), msg.getMsg(), pendingIntent);
         nm.notify(1234, notification);
     }
@@ -64,11 +73,13 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         //push가 들어오면 이 함수를 통해 메세지를 받습니다.
-        String msg = intent.getStringExtra("msg");
+        String brand = intent.getStringExtra("brand");
+        String memo =intent.getStringExtra("memo");
+        String due=intent.getStringExtra("due");
 
-        Log.d("tiah", " onMessage.getmessage:" + msg);
+        Log.d("tiah", " onMessage.getmessage:" + brand);
 
-        sendNotification(msg);
+        sendNotification(due,brand);
 
 
     }

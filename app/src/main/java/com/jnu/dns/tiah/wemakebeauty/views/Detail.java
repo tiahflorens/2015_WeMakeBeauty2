@@ -22,22 +22,24 @@ import com.jnu.dns.tiah.wemakebeauty.others.Tags;
 public class Detail extends ActionBarActivity {
 
     private Context context;
-    private  int rid;
+    private int rid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         context = this;
-        rid = getIntent().getIntExtra("rid" , -1);
+        rid = getIntent().getIntExtra("rid", -1);
 
-        if(rid < 0)
+        if (rid < 0)
             exit();
         else
             reqeustDetail();
 
     }
-    public void exit(){
+
+    public void exit() {
         Toast.makeText(context, " sorry", Toast.LENGTH_SHORT).show();
         this.finish();
     }
@@ -46,20 +48,21 @@ public class Detail extends ActionBarActivity {
         return rid;
     }
 
-    public void reqeustDetail(){
+    public void reqeustDetail() {
 
         ReviewItem rev = new ReviewItem(getRid());
-        String[] params = { Tags.REVIEW_READ_SINGLE, new Gson().toJson(rev)};
-        sendReqeust(params);
-    }
-    public void requestLike(){
-        Preferences prefs = new Preferences(context);
-        ReviewItem rev = new ReviewItem(getRid() ,prefs.getInt(Tags.USER_ID));
-        String[] params = { Tags.REVIEW_LIKE, new Gson().toJson(rev)};
+        String[] params = {Tags.REVIEW_READ_SINGLE, new Gson().toJson(rev)};
         sendReqeust(params);
     }
 
-    public void sendReqeust(String[] p){
+    public void requestLike() {
+        Preferences prefs = new Preferences(context);
+        ReviewItem rev = new ReviewItem(getRid(), prefs.getInt(Tags.USER_ID));
+        String[] params = {Tags.REVIEW_LIKE, new Gson().toJson(rev)};
+        sendReqeust(params);
+    }
+
+    public void sendReqeust(String[] p) {
         new AsyncTask<String, Void, String>() {
             ProgressDialog pd;
 
@@ -75,7 +78,7 @@ public class Detail extends ActionBarActivity {
             @Override
             protected String doInBackground(String... strings) {
                 NetworkHandler network = new NetworkHandler();
-                return network.sendRequest(Tags.REVIEW,strings[0] , strings[1]);
+                return network.sendRequest(Tags.REVIEW, strings[0], strings[1]);
             }
 
             @Override
@@ -95,12 +98,12 @@ public class Detail extends ActionBarActivity {
         }.execute(p);
     }
 
-    public void handleResponse(String raw){
-        ReviewItem rev = new Gson().fromJson(raw ,ReviewItem.class);
+    public void handleResponse(String raw) {
+        ReviewItem rev = new Gson().fromJson(raw, ReviewItem.class);
 
-          TextView tvBrand, tvProduct, tvTitle, tvMemo, tvPrice ,tvWriter;
-          ImageView img;
-          RatingBar rating;
+        TextView tvBrand, tvProduct, tvTitle, tvMemo, tvPrice, tvWriter;
+        ImageView img;
+        RatingBar rating;
     }
 
 

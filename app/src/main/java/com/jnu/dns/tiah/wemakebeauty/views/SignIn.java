@@ -60,8 +60,6 @@ public class SignIn extends ActionBarActivity {
     }
 
 
-
-
     public void initComponents() {
         context = this;
 
@@ -207,8 +205,6 @@ public class SignIn extends ActionBarActivity {
 
 
     }
-
-
 
 
     private boolean checkPlayServices() {

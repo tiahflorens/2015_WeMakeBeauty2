@@ -4,9 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,9 +33,9 @@ public class BeauTalkDetail extends ActionBarActivity {
     private ArrayList<CommentItem> list;
     private CommentAdapter adapter;
     private Context context;
-    private View header;
-    private int bid;
+    private int bid, uid;
     private EditText etComment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,34 +46,66 @@ public class BeauTalkDetail extends ActionBarActivity {
 
         init();
     }
-    public void initComponent(){
+
+    public void initComponent() {
         context = this;
-        etComment = (EditText)findViewById(R.id.beauty_detail_et_comment);
+        etComment = (EditText) findViewById(R.id.beauty_detail_et_comment);
         list = new ArrayList<>();
         ListView lv = (ListView) findViewById(R.id.beauty_detail_lv_comments);
-        header = getLayoutInflater().inflate(R.layout.beau_talk_detail_header_layout, null, false);
+        View header = getLayoutInflater().inflate(R.layout.beau_talk_detail_header_layout, null, false);
         header.setClickable(false);
         adapter = new CommentAdapter(list, context);
         lv.addHeaderView(header);
         lv.setAdapter(adapter);
 
+        Preferences prefs = new Preferences(context);
+        uid = prefs.getInt(Tags.USER_ID);
 
 
         bid = getIntent().getIntExtra("bid", -1);
     }
 
-    public void init(){
-        if(bid < 0){
+    public void doCute() {
+        if (isCute) {
+            imageToast(R.drawable.unlike_btn);
+            requestCute(false);
+            isCute = false;
+        } else {
+            requestCute(true);
+            imageToast(R.drawable.like_btn);
+            isCute = true;
+        }
+
+    }
+
+    public void imageToast(int d) {
+        Toast toast =
+                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        ImageView imageView = new ImageView(getApplicationContext());
+        imageView.setImageResource(d);
+        toast.setView(imageView);
+        toast.setGravity(Gravity.CENTER, 50, 50);
+        toast.show();
+    }
+
+    public void requestCute(boolean b) {
+        BeauTalkItem item = new BeauTalkItem(uid, bid, b);
+        String[] params = {Tags.BEAUTY_CUTE, new Gson().toJson(item)};
+        sendRequest(params);
+    }
+
+    public void init() {
+        if (bid < 0) {
             this.finish();
         }
 
         BeauTalkItem item = new BeauTalkItem(bid);
-        String[] params = { Tags.BEAUTY_READ ,new Gson().toJson(item) };
+        String[] params = {Tags.BEAUTY_READ, new Gson().toJson(item)};
         sendRequest(params);
 
     }
 
-    public void sendRequest(String[] args){
+    public void sendRequest(String[] args) {
 
 
         new AsyncTask<String, Void, String>() {
@@ -84,7 +117,7 @@ public class BeauTalkDetail extends ActionBarActivity {
                 pd = new ProgressDialog(context);
                 pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 pd.setMessage(Tags.MSG_WAIT);
-                pd.show();
+                //pd.show();
             }
 
             @Override
@@ -99,42 +132,45 @@ public class BeauTalkDetail extends ActionBarActivity {
                 pd.dismiss();
 
                 handleResponse(s);
-             }
+            }
 
         }.execute(args);
     }
 
-    public void handleResponse(String raw){
-        if(raw==null)
+    public void handleResponse(String raw) {
+        if (raw == null)
             return;
-         BeauTalkItem item = new Gson().fromJson(raw,BeauTalkItem.class);
+        BeauTalkItem item = new Gson().fromJson(raw, BeauTalkItem.class);
 
 
-        Log.d("tiah" , " item is null return");
-        if(item == null)
+        Log.d("tiah", " item is null return");
+        if (item == null)
             return;
-        TextView title = (TextView)findViewById(R.id.beauty_detail_tv_title);
-        TextView nick = (TextView)findViewById(R.id.beauty_detail_tv_nick);
-        TextView memo =(TextView)findViewById(R.id.beauty_detail_tv_memo);
-        ImageView photo = (ImageView)findViewById(R.id.beauty_detail_img_photo);
+        TextView title = (TextView) findViewById(R.id.beauty_detail_tv_title);
+        TextView nick = (TextView) findViewById(R.id.beauty_detail_tv_nick);
+        TextView memo = (TextView) findViewById(R.id.beauty_detail_tv_memo);
+        ImageView photo = (ImageView) findViewById(R.id.beauty_detail_img_photo);
 
         title.setText(item.getTitle());
         nick.setText(item.getNickname());
         memo.setText(item.getMemo());
-        photo.setImageBitmap(BitmapFactory.decodeByteArray(item.getPic(),0,item.getPic().length));
-        list.addAll(item.getComments());
-        adapter.notifyDataSetChanged();
-
-
+        photo.setImageBitmap(BitmapFactory.decodeByteArray(item.getPic(), 0, item.getPic().length));
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"image view ", Toast.LENGTH_SHORT).show();
+
+                checkDouble(System.currentTimeMillis());
             }
         });
 
 
-         findViewById(R.id.beauty_detail_btn_done).setOnClickListener(new View.OnClickListener() {
+        isCute = item.getList().contains(uid);
+
+        list.addAll(item.getComments());
+        adapter.notifyDataSetChanged();
+
+
+        findViewById(R.id.beauty_detail_btn_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 writeComment();
@@ -142,18 +178,31 @@ public class BeauTalkDetail extends ActionBarActivity {
         });
     }
 
-    public void writeComment(){
-        Toast.makeText(context,"ddd",Toast.LENGTH_SHORT).show();
-        Preferences prefs = new Preferences(context);
-        int uid = prefs.getInt(Tags.USER_ID);
+    private boolean isCute;
+    private long stamp;
+
+    public void checkDouble(long stamp2) {
+        if (stamp == 0)
+            stamp = stamp2;
+        else {
+            if ((stamp2 - stamp) < 500) {
+                stamp = stamp2;
+                doCute();
+            }
+        }
+    }
+
+
+    public void writeComment() {
+        Toast.makeText(context, "ddd", Toast.LENGTH_SHORT).show();
+
         String text = etComment.getText().toString();
-        if(text.isEmpty())
+        if (text.isEmpty())
             return;
-        CommentItem item = new CommentItem(text,bid,uid);
-        String params[] = { Tags.BEAUTY_COMMENT, new Gson().toJson(item)};
+        CommentItem item = new CommentItem(text, bid, uid);
+        String params[] = {Tags.BEAUTY_COMMENT, new Gson().toJson(item)};
         sendRequest(params);
         etComment.setText("");
-
 
 
     }

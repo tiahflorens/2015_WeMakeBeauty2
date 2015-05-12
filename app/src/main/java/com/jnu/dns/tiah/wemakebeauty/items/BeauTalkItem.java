@@ -15,7 +15,13 @@ public class BeauTalkItem {
     private ArrayList<Integer> list;
     private ArrayList<BeauTalkItem> set;
     private ArrayList<CommentItem> comments;
+    private boolean isCute;
 
+    public BeauTalkItem(int id, int idx, boolean isCute) {
+        this.id = id;
+        this.idx = idx;
+        this.isCute = isCute;
+    }
 
     public BeauTalkItem(int id) {
         //  read --------->>
@@ -59,6 +65,14 @@ public class BeauTalkItem {
         this.nickname = nickname;
     }
 
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public boolean isCute() {
+        return isCute;
+    }
 
     public ArrayList<CommentItem> getComments() {
         return comments;

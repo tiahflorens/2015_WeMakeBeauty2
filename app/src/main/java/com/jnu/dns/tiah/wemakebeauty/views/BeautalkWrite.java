@@ -51,10 +51,11 @@ public class BeautalkWrite extends ActionBarActivity {
         temp();
     }
 
-    public void temp(){
-        etTitle.setText("title "+((int)(Math.random()*10)%3));
-        etMemo.setText("Memo "+((int)(Math.random()*10)%3));
+    public void temp() {
+        etTitle.setText("title " + ((int) (Math.random() * 10) % 3));
+        etMemo.setText("Memo " + ((int) (Math.random() * 10) % 3));
     }
+
     public void init() {
         Preferences prefs = new Preferences(context);
         nick = prefs.getString(Tags.USER_NICKNAME);

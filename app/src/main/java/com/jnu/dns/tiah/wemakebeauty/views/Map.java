@@ -77,9 +77,9 @@ public class Map extends ActionBarActivity { //fragment activity
             gMap.getUiSettings().setTiltGesturesEnabled(false);
             gMap.getUiSettings().setRotateGesturesEnabled(false);
             gMap.setMyLocationEnabled(true);
-            CameraUpdate center=
-                    CameraUpdateFactory.newLatLng(new LatLng(35.177314,126.912658));
-            CameraUpdate zoom=CameraUpdateFactory.zoomTo(13);
+            CameraUpdate center =
+                    CameraUpdateFactory.newLatLng(new LatLng(35.177314, 126.912658));
+            CameraUpdate zoom = CameraUpdateFactory.zoomTo(13);
 
             gMap.moveCamera(center);
             gMap.animateCamera(zoom);
@@ -172,7 +172,11 @@ public class Map extends ActionBarActivity { //fragment activity
 
         log("request " + params[1]);
         new AsyncTask<String, Void, String>() {
-            private String name, memo, due;
+            private String name
+                    ,
+                    memo
+                    ,
+                    due;
 
 
             @Override
