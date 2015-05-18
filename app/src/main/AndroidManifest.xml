@@ -140,7 +140,7 @@
             android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.Main" />
+                android:value=".views.BeauTalk" />
         </activity>
         <activity
             android:name=".views.Basic"
