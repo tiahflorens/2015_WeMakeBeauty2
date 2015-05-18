@@ -2,8 +2,13 @@ package com.jnu.dns.tiah.wemakebeauty.views;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +27,9 @@ import com.jnu.dns.tiah.wemakebeauty.others.NetworkHandler;
 import com.jnu.dns.tiah.wemakebeauty.others.Preferences;
 import com.jnu.dns.tiah.wemakebeauty.others.Tags;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
 public class ReviewWrite extends ActionBarActivity {
 
     private EditText etBrand, etProduct, etTitle, etMemo, etPrice;
@@ -29,6 +37,12 @@ public class ReviewWrite extends ActionBarActivity {
     private RatingBar rating;
     private Context context;
     private int category;
+    private static final int PICK_FROM_CAMERA = 0;
+    private static final int PICK_FROM_ALBUM = 1;
+    private static final int CROP_FROM_CAMERA = 2;
+    private byte[] bytePhoto;
+    private Uri mImageCaptureUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +52,7 @@ public class ReviewWrite extends ActionBarActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init();
-        temp();
+        //temp();
         setCategory(0);
 
     }
@@ -86,6 +100,15 @@ public class ReviewWrite extends ActionBarActivity {
         etPrice = (EditText) findViewById(R.id.write_review_et_price);
         photo = (ImageView) findViewById(R.id.write_review_img_photo);
         rating = (RatingBar) findViewById(R.id.write_review_rb_rating);
+        photo = (ImageView)findViewById(R.id.write_review_img_photo);
+
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                doTakeAlbumAction();
+            }
+        });
 
 
     }
@@ -124,7 +147,7 @@ public class ReviewWrite extends ActionBarActivity {
                 etBrand.getText().toString(),
                 etProduct.getText().toString(),
                 etMemo.getText().toString(),
-                null, //photo
+                bytePhoto, //photo
                 rating.getRating(),
                 etTitle.getText().toString(),
                 prefs.getInt(Tags.USER_ID),
@@ -184,25 +207,86 @@ public class ReviewWrite extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_writing, menu);
-        return true;
+    private void doTakePhotoAction() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // 임시로 사용할 파일의 경로를 생성
+        String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
+
+        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+        // 특정기기에서 사진을 저장못하는 문제가 있어 다음을 주석처리 합니다.
+        //intent.putExtra("return-data", true);
+        startActivityForResult(intent, PICK_FROM_CAMERA);
+    }
+
+    /**
+     * 앨범에서 이미지 가져오기
+     */
+    private void doTakeAlbumAction() {
+        // 앨범 호출
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
         }
 
-        return super.onOptionsItemSelected(item);
+        switch (requestCode) {
+            case CROP_FROM_CAMERA: {
+                // 크롭이 된 이후의 이미지를 넘겨 받습니다.
+                // 이미지뷰에 이미지를 보여준다거나 부가적인 작업 이후에
+                // 임시 파일을 삭제합니다.
+                final Bundle extras = data.getExtras();
+
+                if (extras != null) {
+                    Bitmap bitmap = extras.getParcelable("data");
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    bytePhoto = stream.toByteArray();
+
+
+                    photo.setImageBitmap(bitmap);
+                }
+
+                // 임시 파일 삭제
+                File f = new File(mImageCaptureUri.getPath());
+                if (f.exists()) {
+                    f.delete();
+                }
+
+                break;
+            }
+
+            case PICK_FROM_ALBUM: {
+                // 이후의 처리가 카메라와 같으므로 일단  break없이 진행합니다.
+                // 실제 코드에서는 좀더 합리적인 방법을 선택하시기 바랍니다.
+
+                mImageCaptureUri = data.getData();
+            }
+
+            case PICK_FROM_CAMERA: {
+                // 이미지를 가져온 이후의 리사이즈할 이미지 크기를 결정합니다.
+                // 이후에 이미지 크롭 어플리케이션을 호출하게 됩니다.
+
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(mImageCaptureUri, "image/*");
+
+                intent.putExtra("outputX", 90);
+                intent.putExtra("outputY", 90);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("scale", true);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, CROP_FROM_CAMERA);
+
+                break;
+            }
+        }
     }
 }

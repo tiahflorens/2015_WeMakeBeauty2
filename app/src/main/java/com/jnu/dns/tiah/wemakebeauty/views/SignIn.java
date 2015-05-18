@@ -196,7 +196,7 @@ public class SignIn extends ActionBarActivity {
             prefs.save(Tags.SHAPE, user.getShape());
             prefs.save(Tags.TYPE, user.getType());
 
-            if (user.getShape() > 0)
+            if (user.getType() > 0)
                 startActivity(new Intent(SignIn.this, Main.class));
             else
                 startActivity(new Intent(SignIn.this, Examine.class));

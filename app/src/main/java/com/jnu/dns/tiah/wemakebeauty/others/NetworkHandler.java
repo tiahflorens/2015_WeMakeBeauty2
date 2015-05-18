@@ -29,8 +29,8 @@ public class NetworkHandler {
     HttpPost httpPost;
     List<NameValuePair> nameValuePairs;
     HttpParams httpParameters;
-    //private final String url = "https://168.131.148.50:";
-    private final String url = "http://192.168.0.2:5001/Beautalk_Server/index2.jsp";
+    private final String url = "http://168.131.148.50:5100/Beautalk_Server/index2.jsp";
+    //private final String url = "http://192.168.0.2:5001/Beautalk_Server/index2.jsp";
 
     public NetworkHandler() {
         httpParameters = new BasicHttpParams();

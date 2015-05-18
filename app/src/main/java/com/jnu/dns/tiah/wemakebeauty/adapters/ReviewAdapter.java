@@ -59,6 +59,7 @@ public class ReviewAdapter extends BaseAdapter {
             tvIndex.setText((position + 1)+"");
             tvBrand.setText(rev.getBrandName());
             tvProduct.setText(rev.getProductName());
+
             if (rev.getPic() != null)
                 img.setImageBitmap(BitmapFactory.decodeByteArray(rev.getPic(), 0, rev.getPic().length));
             else

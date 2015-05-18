@@ -6,31 +6,33 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
 
-    tools:context="com.jnu.dns.tiah.wemakebeauty.views.Examine">
+    tools:context="com.jnu.dns.tiah.wemakebeauty.views.Examine"
+    android:background="@drawable/background">
 
 
-    <ImageButton
-        android:layout_width="100dip"
-        android:layout_height="50dip"
-        android:id="@+id/examine_ibtn_take" />
 
     <ImageView
+        android:layout_marginLeft="20dp"
         android:layout_width="300dip"
         android:layout_height="300dip"
         android:id="@+id/examine_imgv_photo"
-        android:src="@drawable/empty_picture"/>
+        android:src="@drawable/signup_photo"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="당신의 타입은 ?"
         android:id="@+id/examine_tv_result" />
 
 
 
     <ImageButton
+        android:layout_marginRight="20dp"
+        android:background="@null"
+        android:layout_gravity="right"
         android:layout_width="100dip"
         android:layout_height="50dip"
+        android:src="@drawable/signup_ok"
         android:id="@+id/examine_ibtn_done" />
 </LinearLayout>

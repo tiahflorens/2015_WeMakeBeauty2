@@ -35,7 +35,7 @@ public class Examine extends ActionBarActivity {
     private static final int CROP_FROM_CAMERA = 2;
     private Uri mImageCaptureUri;
     private ImageView imgView;
-    private ImageButton ibtnDone, ibtnTake;
+    private ImageButton ibtnDone;
     private TextView tvResult;
     private Preferences prefs;
     private Gson gson;
@@ -56,7 +56,6 @@ public class Examine extends ActionBarActivity {
         gson = new Gson();
         imgView = (ImageView) findViewById(R.id.examine_imgv_photo);
         ibtnDone = (ImageButton) findViewById(R.id.examine_ibtn_done);
-        ibtnTake = (ImageButton) findViewById(R.id.examine_ibtn_take);
         tvResult = (TextView) findViewById(R.id.examine_tv_result);
         setVisibleDone(false);
 
@@ -64,7 +63,8 @@ public class Examine extends ActionBarActivity {
     }
 
     private void addActions() {
-        ibtnTake.setOnClickListener(new View.OnClickListener() {
+
+        imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doTakePhotoAction();

@@ -2,12 +2,14 @@ package com.jnu.dns.tiah.wemakebeauty.views;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +21,7 @@ import com.jnu.dns.tiah.wemakebeauty.others.NetworkHandler;
 import com.jnu.dns.tiah.wemakebeauty.others.Preferences;
 import com.jnu.dns.tiah.wemakebeauty.others.Tags;
 
-public class Detail extends ActionBarActivity {
+public class ReviewDetail extends ActionBarActivity {
 
     private Context context;
     private int rid;
@@ -55,12 +57,6 @@ public class Detail extends ActionBarActivity {
         sendReqeust(params);
     }
 
-    public void requestLike() {
-        Preferences prefs = new Preferences(context);
-        ReviewItem rev = new ReviewItem(getRid(), prefs.getInt(Tags.USER_ID));
-        String[] params = {Tags.REVIEW_LIKE, new Gson().toJson(rev)};
-        sendReqeust(params);
-    }
 
     public void sendReqeust(String[] p) {
         new AsyncTask<String, Void, String>() {
@@ -101,9 +97,46 @@ public class Detail extends ActionBarActivity {
     public void handleResponse(String raw) {
         ReviewItem rev = new Gson().fromJson(raw, ReviewItem.class);
 
-        TextView tvBrand, tvProduct, tvTitle, tvMemo, tvPrice, tvWriter;
+        TextView tvBrand, tvProduct, tvTitle, tvDetail, tvPrice, tvWriter;
         ImageView img;
         RatingBar rating;
+
+        tvBrand = (TextView) findViewById(R.id.detail_review_tv_brand);
+        tvProduct = (TextView) findViewById(R.id.detail_review_tv_product);
+        tvTitle = (TextView) findViewById(R.id.detail_review_tv_title);
+        tvDetail = (TextView) findViewById(R.id.detail_review_tv_detail);
+        tvPrice = (TextView) findViewById(R.id.detail_review_tv_price);
+        tvWriter = (TextView) findViewById(R.id.detail_review_tv_nick);
+        img = (ImageView) findViewById(R.id.detail_review_img_photo);
+        rating = (RatingBar) findViewById(R.id.detail_review_ratingbar);
+
+        tvBrand.setText(rev.getBrandName());
+        tvProduct.setText(rev.getProductName());
+        tvTitle.setText(rev.getTitle());
+        tvDetail.setText(rev.getMemo());
+        tvPrice.setText(rev.getPrice() + "원");
+        tvWriter.setText(rev.getNickName());
+        img.setImageBitmap(BitmapFactory.decodeByteArray(rev.getPic(), 0, rev.getPic().length));
+        rating.setRating(rev.getRating());
+
+        rating.setClickable(false);
+
+
+        RadioButton radioButton1, radioButton2;
+        radioButton1 = (RadioButton) findViewById(R.id.detail_review_rb_option1);
+        radioButton2 = (RadioButton) findViewById(R.id.detail_review_rb_option2);
+
+        if (rev.getCategory() > 15) { //TODO
+            radioButton1.setSelected(true);
+            radioButton2.setSelected(false);
+
+        } else {
+            radioButton1.setSelected(false);
+            radioButton2.setSelected(true);
+        }
+        radioButton1.setClickable(false);
+        radioButton2.setClickable(false);
+
     }
 
 

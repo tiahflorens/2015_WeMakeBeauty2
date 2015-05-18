@@ -53,6 +53,20 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
         //testAdd();
     }
 
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        log("onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putAll(outState);
+        log("onSaveInstanceState");
+    }
+
     public void setTag(String tag) {
         log("set Tag : " + tag);
         this.tag = tag;
@@ -65,7 +79,7 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
     public void init() {
         setLock(true);
         setSearchFlag(false);
-        currentIndex = 0;
+        currentIndex = -1;
         gson = new Gson();
         context = this;
         prefs = new Preferences(context);
@@ -138,7 +152,7 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
     }
 
     public void moveToDetailPage(int rid) {
-        Intent intent = new Intent(Review.this, Detail.class);
+        Intent intent = new Intent(Review.this, ReviewDetail.class);
         intent.putExtra("rid", rid);
         startActivity(intent);
     }
