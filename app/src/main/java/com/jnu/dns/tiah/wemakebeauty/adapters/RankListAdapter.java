@@ -58,7 +58,7 @@ public class RankListAdapter extends BaseAdapter {
         pre = (ImageView) convertView.findViewById(R.id.item_ranking_img_preview);
 
 
-        switch (position){ // index image icon.
+        switch (position) { // index image icon.
             case 0:
                 idx.setImageDrawable(context.getResources().getDrawable(R.drawable.no1));
                 break;
@@ -70,11 +70,12 @@ public class RankListAdapter extends BaseAdapter {
                 break;
         }
 
-        if(position==4){ //0){
+        if (position == 0) { //0){
             byte[] pic = list.get(position).getPic();
             if (pic != null)
                 pre.setImageBitmap(BitmapFactory.decodeByteArray(pic, 0, pic.length));
-        }
+        } else
+            pre.setVisibility(View.GONE);
         tv.setText(list.get(position).getBrandName() + " " + list.get(position).getProductName());
 
         return convertView;

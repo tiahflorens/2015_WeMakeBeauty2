@@ -2,7 +2,6 @@ package com.jnu.dns.tiah.wemakebeauty.views;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +9,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,7 +27,6 @@ import com.jnu.dns.tiah.wemakebeauty.R;
 import com.jnu.dns.tiah.wemakebeauty.items.EventItem;
 import com.jnu.dns.tiah.wemakebeauty.others.DBAdapter;
 import com.jnu.dns.tiah.wemakebeauty.others.NetworkHandler;
-import com.jnu.dns.tiah.wemakebeauty.others.Tags;
 import com.jnu.dns.tiah.wemakebeauty.others.Work;
 
 import java.util.ArrayList;
@@ -139,6 +141,7 @@ public class Map extends ActionBarActivity { //fragment activity
 
     public void update(int rad, LatLng point) {
         log("update");
+        Toast.makeText(context, "updating!", Toast.LENGTH_SHORT).show();
 
         gMap.clear();
         Cursor c = db.get();
@@ -211,8 +214,10 @@ public class Map extends ActionBarActivity { //fragment activity
     public void addMarker(EventItem e) {
         log("addMarker " + e.getBrand());
         LatLng latLng = new LatLng(e.getLat(), e.getLng());
-        MarkerOptions mOptions = new MarkerOptions().position(latLng).snippet(e.getMemo());
+        MarkerOptions mOptions = new MarkerOptions().position(latLng).snippet(e.getDue() + "\n" + e.getMemo()).title(e.getBrand());
 
+
+        gMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
         // mOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker));
         gMap.addMarker(mOptions);
     }
@@ -246,5 +251,38 @@ public class Map extends ActionBarActivity { //fragment activity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+        private final View inflater;
+
+        MyInfoWindowAdapter() {
+            inflater = getLayoutInflater()
+                    .inflate(R.layout.map_infowindow, null);
+        }
+
+        public View getInfoWindow(Marker marker) {
+            render(marker, inflater);
+            return inflater;
+        }
+
+        public View getInfoContents(Marker marker) {
+
+            return null;
+        }
+
+        private void render(Marker marker, View view) {
+
+            ImageView photo = (ImageView) inflater.findViewById(R.id.info_window_photo);
+            TextView tv = (TextView) inflater.findViewById(R.id.info_window_tv);
+            if (marker.getTitle().equalsIgnoreCase("미샤"))
+                photo.setImageDrawable(getDrawable(R.drawable.ic_launcher));
+            else
+                photo.setImageDrawable(getDrawable(R.drawable.ic_launcher));
+
+            tv.setText(marker.getSnippet());
+
+
+        }
     }
 }

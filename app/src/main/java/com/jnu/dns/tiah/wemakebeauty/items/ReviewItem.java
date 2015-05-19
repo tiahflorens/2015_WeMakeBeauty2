@@ -81,11 +81,11 @@ public class ReviewItem {
     }
 
 
-    public ReviewItem(int id, String brandName, String productName, byte[] pic) {
+    public ReviewItem(int id, String title, String productName, byte[] pic) {
         // <<------ review list response
         // <<------ search list response
         this.id = id;
-        this.brandName = brandName;
+        this.title = title;
         this.productName = productName;
         this.pic = pic;
     }
