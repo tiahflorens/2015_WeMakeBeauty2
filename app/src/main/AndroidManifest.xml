@@ -131,7 +131,7 @@
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.Main" />
+                android:value=".views.Review" />
         </activity>
 
         <activity
@@ -150,7 +150,7 @@
             android:label="@string/title_activity_beau_talk_item">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".views.Main" />
+                android:value=".views.BeauTalk" />
         </activity>
     </application>
 

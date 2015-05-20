@@ -47,17 +47,17 @@ public class ReviewAdapter extends BaseAdapter {
               LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.item_review, parent, false);
 
-            TextView tvIndex, tvProduct, tvBrand;
+            TextView tvIndex, tvProduct, tvTitle;
 
             tvIndex = (TextView) convertView.findViewById(R.id.item_review_tv_idx);
             tvProduct = (TextView) convertView.findViewById(R.id.item_review_tv_product);
-            tvBrand = (TextView) convertView.findViewById(R.id.item_review_tv_brand);
+            tvTitle = (TextView) convertView.findViewById(R.id.item_review_tv_title);
             ImageView img = (ImageView) convertView.findViewById(R.id.item_review_img_photo);
 
             ReviewItem rev = list.get(position);
 
             tvIndex.setText((position + 1)+"");
-            tvBrand.setText(rev.getBrandName());
+            tvTitle.setText(rev.getTitle());
             tvProduct.setText(rev.getProductName());
 
             if (rev.getPic() != null)

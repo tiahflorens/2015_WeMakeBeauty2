@@ -125,6 +125,16 @@ public class Work {
 
     }
 
+    public String getDateDifference(long due){
+
+        long diff = due - System.currentTimeMillis();
+
+        diff /= 1000;
+        diff/= (3600*24);
+
+        return (int)diff +"일 남았어요!";
+    }
+
     public int getSearchRadius(double meter) {
 
 

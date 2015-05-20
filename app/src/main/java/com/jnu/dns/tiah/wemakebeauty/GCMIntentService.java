@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
+import com.jnu.dns.tiah.wemakebeauty.others.DBAdapter;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -77,7 +78,10 @@ public class GCMIntentService extends GCMBaseIntentService {
         String memo =intent.getStringExtra("memo");
         String due=intent.getStringExtra("due");
 
-        Log.d("tiah", " onMessage.getmessage:" + brand);
+        DBAdapter db = new DBAdapter(context);
+        db.open();
+        db.insert(brand,due,memo);
+        Log.d("tiah", " onMessage.getmessage:" + brand + " , " + due);
 
         sendNotification(due,brand);
 

@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/item_review_tv_idx"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="1"
@@ -14,25 +14,25 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:layout_weight="2"
-        android:id="@+id/item_review_tv_brand"
-        android:layout_width="wrap_content"
+        android:layout_weight="3"
+        android:id="@+id/item_review_tv_product"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="Brand"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:layout_weight="2"
-        android:id="@+id/item_review_tv_product"
-        android:layout_width="wrap_content"
+        android:layout_weight="3"
+        android:id="@+id/item_review_tv_title"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="Product"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
-        android:layout_weight="4"
+        android:layout_weight="3"
         android:id="@+id/item_review_img_photo"
         android:layout_width="80dip"
 

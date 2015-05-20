@@ -48,13 +48,8 @@ public class BeautalkWrite extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         context = this;
         init();
-        temp();
     }
 
-    public void temp() {
-        etTitle.setText("title " + ((int) (Math.random() * 10) % 3));
-        etMemo.setText("Memo " + ((int) (Math.random() * 10) % 3));
-    }
 
     public void init() {
         Preferences prefs = new Preferences(context);

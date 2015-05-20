@@ -2,6 +2,9 @@ package com.jnu.dns.tiah.wemakebeauty.views;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +21,8 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -43,7 +48,7 @@ public class Map extends ActionBarActivity { //fragment activity
     double dist;
     Work work;
     float zoomLevel;
-    Gson gson;
+
     Context context;
     DBAdapter db;
 
@@ -57,10 +62,9 @@ public class Map extends ActionBarActivity { //fragment activity
         context = this;
         db = new DBAdapter(context);
         db.open();
-        db.delete();
-        db.insert(new EventItem("아리따움", "세일ㄱㄱ", System.currentTimeMillis()));
         work = new Work(screenWidth);
-        gson = new Gson();
+        makeIcon();
+
     }
 
     public void getScreenSize() {
@@ -152,14 +156,15 @@ public class Map extends ActionBarActivity { //fragment activity
 
 
                 String name = c.getString(0);
-                long _due = c.getLong(1);
+                String due = work.getDateDifference(c.getLong(1));
                 String memo = c.getString(2);
 
                 String url = work.getURL(name, point.latitude, point.longitude, rad);
                 Calendar cal = Calendar.getInstance();
-                cal.setTimeInMillis(_due);
-                String due = cal.getTime().toString();
+                //cal.setTimeInMillis(_due);
+                //String due = cal.getTime().toString();
 
+                log(due);
 
                 String[] params = {url, name, due, memo};
 
@@ -218,8 +223,24 @@ public class Map extends ActionBarActivity { //fragment activity
 
 
         gMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-        // mOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker));
+
+
+
+        // mOptions.icon(missha);
         gMap.addMarker(mOptions);
+    }
+
+    BitmapDescriptor missha;
+    public void makeIcon(){
+
+        BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.missha);
+        Bitmap bitmap = drawable.getBitmap();
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() ,bitmap.getHeight() ,false );
+
+        //missha = BitmapDescriptorFactory.fromResource(R.drawable.missha);
+        missha = BitmapDescriptorFactory.fromBitmap(scaledBitmap);
+
+
     }
 
     @Override
@@ -276,10 +297,11 @@ public class Map extends ActionBarActivity { //fragment activity
             ImageView photo = (ImageView) inflater.findViewById(R.id.info_window_photo);
             TextView tv = (TextView) inflater.findViewById(R.id.info_window_tv);
             if (marker.getTitle().equalsIgnoreCase("미샤"))
-                photo.setImageDrawable(getDrawable(R.drawable.ic_launcher));
-            else
-                photo.setImageDrawable(getDrawable(R.drawable.ic_launcher));
+                photo.setImageDrawable(context.getResources().getDrawable(R.drawable.missha));
+            else if(marker.getTitle().equalsIgnoreCase("아리따움"))
+                photo.setImageDrawable(context.getResources().getDrawable(R.drawable.aritaum));
 
+            log("market snippt " + marker.getSnippet());
             tv.setText(marker.getSnippet());
 
 

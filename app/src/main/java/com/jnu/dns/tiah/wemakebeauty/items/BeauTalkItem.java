@@ -45,8 +45,16 @@ public class BeauTalkItem {
         this.list = list;
     }
 
+    public BeauTalkItem(int id, byte[] pic, String nickname, ArrayList<Integer> list) {
+        // <<------- response item
+        this.id = id;
+        this.pic = pic;
+        this.nickname = nickname;
+        this.list = list;
+    }
+
     public BeauTalkItem(int id, byte[] pic, String memo, String title, String nickname, ArrayList<Integer> list, ArrayList<CommentItem> comments) {
-        // << ----------- response item
+        // << ----------- response detail item
 
         this.id = id;
         this.pic = pic;

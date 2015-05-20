@@ -47,6 +47,14 @@ public class DBAdapter {
 
     }
 
+    public void insert(String brand, String due , String content){
+
+        ContentValues c = new ContentValues();
+        c.put("brand", brand);
+        c.put("due", due);
+        c.put("content", content);
+        db.insert("event", null, c);
+    }
     public void delete(){
         db.delete("event",null,null);
     }

@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jnu.dns.tiah.wemakebeauty.views.Review">
     <item android:id="@+id/write" android:title="w"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/write_btn"
         android:orderInCategory="101" app:showAsAction="ifRoom" />
 </menu>

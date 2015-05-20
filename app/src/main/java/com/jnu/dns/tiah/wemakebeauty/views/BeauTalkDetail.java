@@ -88,7 +88,7 @@ public class BeauTalkDetail extends ActionBarActivity {
         toast.show();
     }
 
-    public void requestCute(boolean b) {
+    public void requestCute(boolean b) { //TODO check its working
         BeauTalkItem item = new BeauTalkItem(uid, bid, b);
         String[] params = {Tags.BEAUTY_CUTE, new Gson().toJson(item)};
         sendRequest(params);
@@ -182,13 +182,15 @@ public class BeauTalkDetail extends ActionBarActivity {
     private long stamp;
 
     public void checkDouble(long stamp2) {
+        Log.d("tiah", "Beautalk detail :  checkoudble");
         if (stamp == 0)
             stamp = stamp2;
         else {
             if ((stamp2 - stamp) < 500) {
-                stamp = stamp2;
                 doCute();
             }
+            stamp = stamp2;
+
         }
     }
 

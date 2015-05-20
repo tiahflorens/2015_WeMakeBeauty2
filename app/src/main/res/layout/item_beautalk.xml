@@ -18,13 +18,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="tuitle"
             android:id="@+id/item_beautalk_tv_title"
-            android:textSize="20pt"
+            android:textSize="15pt"
             />
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/imageView3"
+            android:id="@+id/item_beautalk_img_like"
             android:src="@drawable/unlike_btn"/>
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="42 likes"
-            android:id="@+id/textView30" />
+            android:id="@+id/item_beautalk_tv_count" />
     </LinearLayout>
 
     <ImageView
