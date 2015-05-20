@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
@@ -18,7 +16,6 @@ import com.google.gson.Gson;
 import com.jnu.dns.tiah.wemakebeauty.R;
 import com.jnu.dns.tiah.wemakebeauty.items.ReviewItem;
 import com.jnu.dns.tiah.wemakebeauty.others.NetworkHandler;
-import com.jnu.dns.tiah.wemakebeauty.others.Preferences;
 import com.jnu.dns.tiah.wemakebeauty.others.Tags;
 
 public class ReviewDetail extends ActionBarActivity {

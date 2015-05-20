@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -100,7 +98,7 @@ public class ReviewWrite extends ActionBarActivity {
         etPrice = (EditText) findViewById(R.id.write_review_et_price);
         photo = (ImageView) findViewById(R.id.write_review_img_photo);
         rating = (RatingBar) findViewById(R.id.write_review_rb_rating);
-        photo = (ImageView)findViewById(R.id.write_review_img_photo);
+        photo = (ImageView) findViewById(R.id.write_review_img_photo);
 
         photo.setOnClickListener(new View.OnClickListener() {
             @Override

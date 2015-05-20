@@ -3,7 +3,6 @@ package com.jnu.dns.tiah.wemakebeauty.views;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
 import com.jnu.dns.tiah.wemakebeauty.R;
 import com.jnu.dns.tiah.wemakebeauty.items.EventItem;
 import com.jnu.dns.tiah.wemakebeauty.others.DBAdapter;
@@ -225,17 +223,17 @@ public class Map extends ActionBarActivity { //fragment activity
         gMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
 
 
-
         // mOptions.icon(missha);
         gMap.addMarker(mOptions);
     }
 
     BitmapDescriptor missha;
-    public void makeIcon(){
+
+    public void makeIcon() {
 
         BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.missha);
         Bitmap bitmap = drawable.getBitmap();
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() ,bitmap.getHeight() ,false );
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), false);
 
         //missha = BitmapDescriptorFactory.fromResource(R.drawable.missha);
         missha = BitmapDescriptorFactory.fromBitmap(scaledBitmap);
@@ -298,7 +296,7 @@ public class Map extends ActionBarActivity { //fragment activity
             TextView tv = (TextView) inflater.findViewById(R.id.info_window_tv);
             if (marker.getTitle().equalsIgnoreCase("미샤"))
                 photo.setImageDrawable(context.getResources().getDrawable(R.drawable.missha));
-            else if(marker.getTitle().equalsIgnoreCase("아리따움"))
+            else if (marker.getTitle().equalsIgnoreCase("아리따움"))
                 photo.setImageDrawable(context.getResources().getDrawable(R.drawable.aritaum));
 
             log("market snippt " + marker.getSnippet());
