@@ -67,7 +67,7 @@ public class Examine extends ActionBarActivity {
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doTakePhotoAction();
+                doTakeAlbumAction();
             }
         });
 
@@ -79,6 +79,12 @@ public class Examine extends ActionBarActivity {
         });
     }
 
+    private void doTakeAlbumAction() {
+        // 앨범 호출
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
     private void doTakePhotoAction() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -173,17 +179,18 @@ public class Examine extends ActionBarActivity {
 
         switch (requestCode) {
             case CROP_FROM_CAMERA: {
+                log("crop from camera");
 
                 final Bundle extras = data.getExtras();
 
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
-
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
                     photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                    //bytePhoto = stream.toByteArray();
                     imgView.setImageBitmap(photo);
                     request(stream.toByteArray());
+
                 }
 
                 // 임시 파일 삭제
@@ -200,24 +207,48 @@ public class Examine extends ActionBarActivity {
                 // 실제 코드에서는 좀더 합리적인 방법을 선택하시기 바랍니다.
 
                 mImageCaptureUri = data.getData();
+                log("pick from album");
             }
 
             case PICK_FROM_CAMERA: {
                 // 이미지를 가져온 이후의 리사이즈할 이미지 크기를 결정합니다.
                 // 이후에 이미지 크롭 어플리케이션을 호출하게 됩니다.
 
+                log("pick from camera");
+
                 Intent intent = new Intent("com.android.camera.action.CROP");
                 intent.setDataAndType(mImageCaptureUri, "image/*");
 
-                intent.putExtra("outputX", 90);
-                intent.putExtra("outputY", 90);
+                /*intent.putExtra("outputX", 240);
+                intent.putExtra("outputY", 240);
                 intent.putExtra("aspectX", 1);
                 intent.putExtra("aspectY", 1);
+                */
                 intent.putExtra("scale", true);
                 intent.putExtra("return-data", true);
-                startActivityForResult(intent, CROP_FROM_CAMERA);
 
-                break;
+
+                //startActivityForResult(intent, CROP_FROM_CAMERA);
+
+                try {
+                    //Uri에서 이미지 이름을 얻어온다.
+                    //String name_Str = getImageNameToUri(data.getData());
+
+                    //이미지 데이터를 비트맵으로 받아온다.
+                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+                    image_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    imgView.setImageBitmap(image_bitmap);
+                    request(stream.toByteArray());
+
+                    //배치해놓은 ImageView에 set
+                 }catch(Exception e){
+
+                }
+
+                    break;
             }
         }
     }

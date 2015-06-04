@@ -282,6 +282,7 @@ public class Map extends ActionBarActivity { //fragment activity
 
         public View getInfoWindow(Marker marker) {
             render(marker, inflater);
+
             return inflater;
         }
 

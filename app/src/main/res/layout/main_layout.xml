@@ -153,11 +153,8 @@
 
                     <RadioGroup
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
 
                             <RadioButton
                                 android:layout_marginLeft="50dp"
@@ -171,8 +168,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="off"
                                 android:id="@+id/radioButton2" />
-                        </LinearLayout>
-                    </RadioGroup>
+                     </RadioGroup>
 
                 </LinearLayout>
 

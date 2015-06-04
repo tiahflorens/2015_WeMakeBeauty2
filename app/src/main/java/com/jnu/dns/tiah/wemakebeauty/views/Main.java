@@ -165,6 +165,15 @@ public class Main extends ActionBarActivity {
                 logout();
             }
         });
+        TextView tvrecheck = (TextView)findViewById(R.id.textView10);
+        tvrecheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Main.this , Examine.class));
+            }
+        });
+
+
 
         ImageView photo = (ImageView) findViewById(R.id.drawer_img_selfie);
         String raw = prefs.getString(Tags.USER_PIC);
