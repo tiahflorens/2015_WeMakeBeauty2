@@ -25,6 +25,7 @@ import com.jnu.dns.tiah.wemakebeauty.items.UserItem;
 import com.jnu.dns.tiah.wemakebeauty.others.NetworkHandler;
 import com.jnu.dns.tiah.wemakebeauty.others.Preferences;
 import com.jnu.dns.tiah.wemakebeauty.others.Tags;
+import com.jnu.dns.tiah.wemakebeauty.others.Work;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -85,6 +86,7 @@ public class Examine extends ActionBarActivity {
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, PICK_FROM_ALBUM);
     }
+
     private void doTakePhotoAction() {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -151,15 +153,30 @@ public class Examine extends ActionBarActivity {
 
         if (user.isDone()) {//서버측에서 작업을 성공했다면
             setVisibleDone(true);
-            tvResult.setText("type : " + user.getType() + "\n" + "shape : " + user.getShape());
+            int[] arr = new int[2];
+
+            Work work = new Work();
+            work.decoding(arr, user.getType());
+
+            //shape , tone , type
+            tvResult.setText(
+                    "shape : " + work.getShapeInText(user.getShape())+ user.getShape()
+                    + "\ntone : " + work.getToneInText(arr[0])+ arr[0]
+                    + "\ntype : " + work.getTypeInText(arr[1]) + arr[1] );
+
+
             prefs.save(Tags.SHAPE, user.getShape());
-            prefs.save(Tags.TYPE, user.getType());
+            prefs.save(Tags.SKINTONE , arr[0]);
+            prefs.save(Tags.SKINTYPE , arr[1]);
 
             log("shape and type saved");
 
         }
 
     }
+
+
+
 
     public void setVisibleDone(boolean b) {
         if (b)
@@ -244,11 +261,11 @@ public class Examine extends ActionBarActivity {
                     request(stream.toByteArray());
 
                     //배치해놓은 ImageView에 set
-                 }catch(Exception e){
+                } catch (Exception e) {
 
                 }
 
-                    break;
+                break;
             }
         }
     }

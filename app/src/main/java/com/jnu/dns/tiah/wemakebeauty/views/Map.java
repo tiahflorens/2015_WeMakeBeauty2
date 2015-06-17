@@ -220,7 +220,7 @@ public class Map extends ActionBarActivity { //fragment activity
         MarkerOptions mOptions = new MarkerOptions().position(latLng).snippet(e.getDue() + "\n" + e.getMemo()).title(e.getBrand());
 
 
-        gMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+        //gMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
 
 
         // mOptions.icon(missha);

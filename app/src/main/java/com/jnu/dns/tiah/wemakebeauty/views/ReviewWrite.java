@@ -78,7 +78,7 @@ public class ReviewWrite extends ActionBarActivity {
         rb1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCategory(Tags.SKINTYPE);
+                setCategory(Tags.CATEGORY_TYPE);
             }
         });
 
@@ -87,7 +87,7 @@ public class ReviewWrite extends ActionBarActivity {
         rb2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCategory(Tags.SKINTONE);
+                setCategory(Tags.CATEGORY_TONE);
             }
         });
 

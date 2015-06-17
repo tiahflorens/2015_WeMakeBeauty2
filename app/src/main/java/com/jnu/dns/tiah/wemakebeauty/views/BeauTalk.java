@@ -41,7 +41,6 @@ public class BeauTalk extends ActionBarActivity {
 
         setIdx(0);
         init();
-        refreshList();
     }
 
     private void init() {
@@ -49,6 +48,7 @@ public class BeauTalk extends ActionBarActivity {
         lv = (ListView) findViewById(R.id.beauty_lv_list);
         adapter = new BeauTalkAdapter(list, context);
         lv.setAdapter(adapter);
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,6 +89,9 @@ public class BeauTalk extends ActionBarActivity {
     }
 
     private void refreshList() {
+        Log.d("tiah", " beautalk . refreshList");
+
+        list.clear();
         BeauTalkItem bea = new BeauTalkItem(getIdx());
         String[] params = {Tags.BEAUTY_READALL, new Gson().toJson(bea)};
         sendRequest(params);
@@ -166,9 +169,13 @@ public class BeauTalk extends ActionBarActivity {
 
 
     private void write() {
-
         startActivity(new Intent(BeauTalk.this, BeautalkWrite.class));
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("tiah", "BeauTalk onResume ");
+        refreshList();
     }
 }

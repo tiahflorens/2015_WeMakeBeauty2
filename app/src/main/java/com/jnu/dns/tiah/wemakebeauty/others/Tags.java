@@ -36,8 +36,10 @@ public class Tags {
     public static final int AD =2;
     public static final int BC=3;
     public static final int BD=4;
-    public static final int SKINTYPE = 11;
-    public static final int SKINTONE = 22;
+    public static final String SKINTYPE = "userskintype";
+    public static final String  SKINTONE = "userskintone";
+    public static final int CATEGORY_TYPE = 11;
+    public static final int CATEGORY_TONE = 22;
 
 
     //Division

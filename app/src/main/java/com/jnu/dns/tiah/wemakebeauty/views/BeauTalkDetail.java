@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -130,22 +128,14 @@ public class BeauTalkDetail extends ActionBarActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 pd.dismiss();
-
                 handleResponse(s);
             }
 
         }.execute(args);
     }
 
-    public void handleResponse(String raw) {
-        if (raw == null)
-            return;
-        BeauTalkItem item = new Gson().fromJson(raw, BeauTalkItem.class);
 
-
-        Log.d("tiah", " item is null return");
-        if (item == null)
-            return;
+    public void updateUI(BeauTalkItem item) {
         TextView title = (TextView) findViewById(R.id.beauty_detail_tv_title);
         TextView nick = (TextView) findViewById(R.id.beauty_detail_tv_nick);
         TextView memo = (TextView) findViewById(R.id.beauty_detail_tv_memo);
@@ -166,9 +156,7 @@ public class BeauTalkDetail extends ActionBarActivity {
 
         isCute = item.getList().contains(uid);
 
-        list.addAll(item.getComments());
-        adapter.notifyDataSetChanged();
-
+        refreshComments(item.getComments());
 
         findViewById(R.id.beauty_detail_btn_done).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +164,35 @@ public class BeauTalkDetail extends ActionBarActivity {
                 writeComment();
             }
         });
+
+    }
+
+    public void handleResponse(String raw) {
+        if (raw == null)
+            return;
+        BeauTalkItem item = new Gson().fromJson(raw, BeauTalkItem.class);
+
+
+        Log.d("tiah", " item is null return");
+        if (item == null)
+            return;
+
+        if (item.isComment())
+            refreshComments(item.getComments());
+        else
+            updateUI(item);
+
+
+    }
+
+
+    public void refreshComments(ArrayList<CommentItem> _list) {
+        if (_list.isEmpty())
+            return;
+
+        list.clear();
+        list.addAll(_list);
+        adapter.notifyDataSetChanged();
     }
 
     private boolean isCute;
@@ -196,8 +213,6 @@ public class BeauTalkDetail extends ActionBarActivity {
 
 
     public void writeComment() {
-        Toast.makeText(context, "ddd", Toast.LENGTH_SHORT).show();
-
         String text = etComment.getText().toString();
         if (text.isEmpty())
             return;
@@ -206,26 +221,7 @@ public class BeauTalkDetail extends ActionBarActivity {
         sendRequest(params);
         etComment.setText("");
 
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_beau_talk_item, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

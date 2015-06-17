@@ -139,17 +139,7 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
         mLockListView = b;
     }
 
-    final String brand = "brand", product = "prodct";
 
-    public void testAdd() {
-        for (int i = 0; i < 20; i++)
-            list.add(new ReviewItem(1, brand + i, product + 1, null));
-
-        Log.d("tiah", "added +" + list.size());
-
-        adapter.notifyDataSetChanged();
-
-    }
 
     public void moveToDetailPage(int rid) {
         Intent intent = new Intent(Review.this, ReviewDetail.class);
@@ -309,6 +299,18 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
         }
 
         return false;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        log("onResume");
+        list.clear();
+        currentIndex = -1;
+        requestNormalReviews();
+
+
     }
 
     public void log(String msg) {

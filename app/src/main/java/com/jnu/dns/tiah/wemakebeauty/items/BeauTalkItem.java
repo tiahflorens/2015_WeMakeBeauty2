@@ -1,7 +1,5 @@
 package com.jnu.dns.tiah.wemakebeauty.items;
 
-import com.jnu.dns.tiah.wemakebeauty.others.Tags;
-
 import java.util.ArrayList;
 
 /**
@@ -15,7 +13,7 @@ public class BeauTalkItem {
     private ArrayList<Integer> list;
     private ArrayList<BeauTalkItem> set;
     private ArrayList<CommentItem> comments;
-    private boolean isCute;
+    private boolean isCute, isComment;
 
     public BeauTalkItem(int id, int idx, boolean isCute) {
         this.id = id;
@@ -73,6 +71,18 @@ public class BeauTalkItem {
         this.nickname = nickname;
     }
 
+    public BeauTalkItem(ArrayList<CommentItem> comments, boolean isComment) {
+        this.comments = comments;
+        this.isComment = isComment;
+    }
+
+    public BeauTalkItem(boolean isComment) {
+        this.isComment = isComment;
+    }
+
+    public boolean isComment() {
+        return isComment;
+    }
 
     public int getIdx() {
         return idx;

@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +22,9 @@ public class Work {
         this.screenWidth = screenWidth;
     }
 
+    public Work(){
+
+    }
 
     final String base = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
     final String sensor = "&sensor=true";
@@ -156,5 +158,49 @@ public class Work {
         }
         */
     }
+
+
+    public void decoding(int[] arr, int result) {
+        switch (result) {
+            case 0:
+                arr[0] = 0;
+                arr[1] = 0;
+                break;
+            case 1:
+                arr[0] = 0;
+                arr[1] = 1;
+                break;
+            case 2:
+                arr[0] = 1;
+                arr[1] = 0;
+                break;
+            case 3:
+                arr[0] = 1;
+                arr[1] = 1;
+                break;
+        }
+    }
+
+    public String getShapeInText(int val){
+        if(val==0)
+            return "둥근형";
+        else
+            return "갸름한형";
+    }
+
+    public String getTypeInText(int val){
+        if(val==0)
+            return "건성피부";
+        else
+            return "지성피부";
+
+    }
+    public String getToneInText(int val){
+        if(val == 0 )
+            return "차가운피부";
+        else
+            return "따뜻한피부";
+    }
+
 
 }

@@ -124,7 +124,7 @@ public class ReviewDetail extends ActionBarActivity {
         radioButton1 = (RadioButton) findViewById(R.id.detail_review_rb_option1);
         radioButton2 = (RadioButton) findViewById(R.id.detail_review_rb_option2);
 
-        if (rev.getCategory() == Tags.SKINTONE) {
+        if (rev.getCategory() == Tags.CATEGORY_TONE){
             radioButton1.setSelected(true);
             radioButton2.setSelected(false);
 
