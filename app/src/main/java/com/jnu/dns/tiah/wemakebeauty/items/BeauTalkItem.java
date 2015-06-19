@@ -76,9 +76,6 @@ public class BeauTalkItem {
         this.isComment = isComment;
     }
 
-    public BeauTalkItem(boolean isComment) {
-        this.isComment = isComment;
-    }
 
     public boolean isComment() {
         return isComment;
