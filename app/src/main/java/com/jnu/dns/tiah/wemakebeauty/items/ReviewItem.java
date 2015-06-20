@@ -28,6 +28,7 @@ public class ReviewItem {
     public ReviewItem(int uid, int idx) {
         // more review ------->>
         // like request ------->>
+        // products of ranking request --->>
         this.id = uid;
         this.idx = idx;
     }
@@ -81,11 +82,12 @@ public class ReviewItem {
     }
 
 
-    public ReviewItem(int id, String title, String productName, byte[] pic) {
+
+    public ReviewItem(int id, String brandName, String productName, byte[] pic) {
         // <<------ review list response
         // <<------ search list response
         this.id = id;
-        this.title = title;
+        this.brandName = brandName     ;
         this.productName = productName;
         this.pic = pic;
     }

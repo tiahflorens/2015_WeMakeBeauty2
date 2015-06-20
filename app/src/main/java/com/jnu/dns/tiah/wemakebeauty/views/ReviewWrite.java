@@ -73,8 +73,7 @@ public class ReviewWrite extends ActionBarActivity {
             }
         });
 
-        RadioButton rb1 = (RadioButton) findViewById(R.id.write_review_rb_option1);
-        rb1.setText("SKIN TYPE");
+        RadioButton rb1 = (RadioButton) findViewById(R.id.write_review_rb_option1);//SKIN TONE
         rb1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,8 +81,7 @@ public class ReviewWrite extends ActionBarActivity {
             }
         });
 
-        RadioButton rb2 = (RadioButton) findViewById(R.id.write_review_rb_option2);
-        rb2.setText("SKIN TONE");
+        RadioButton rb2 = (RadioButton) findViewById(R.id.write_review_rb_option2); //SKIN TYPE
         rb2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -41,16 +41,23 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
     private ListView lv;
     private Gson gson;
     private String tag;
-
+    private int pid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        init();
-        requestNormalReviews();
+        //requestNormalReviews();
         //testAdd();
+
+        pid = getIntent().getIntExtra("pid", -1);
+        log("pid : " + pid);
+
+        init();
+        if (pid > 0)
+            requestForRakingProducts();
+
     }
 
 
@@ -113,17 +120,26 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
                         log("onScroll reached bottom  : " + mLockListView);
                         log("visible item count : " + visibleItemCount);
 
-                        if (list.size() > visibleItemCount)
-                            if (searchFlag)
-                                requestSearchReviews();
-                            else
-                                requestNormalReviews();
-                        //testAdd();
-                    }
 
+                        if(pid<0)
+                            if (list.size() > visibleItemCount)
+                                if (searchFlag)
+                                    requestSearchReviews();
+                                else
+                                    requestNormalReviews();
+                        }
+                        //testAdd();
 
             }
         });
+    }
+
+    public void requestForRakingProducts() {
+        log("request Search for Ranking Items");
+        ReviewItem rev= new ReviewItem(prefs.getInt(Tags.USER_ID) , pid);
+        runAsync(Tags.REVIEW , Tags.REVIEW_READ_RANKING_REVIEWS , gson.toJson(rev));
+
+
     }
 
     public void setSearchFlag(boolean b) {
@@ -138,7 +154,6 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
         log("set lock  : " + b);
         mLockListView = b;
     }
-
 
 
     public void moveToDetailPage(int rid) {
@@ -216,6 +231,7 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
         }
         if (rev.getSet().size() != 0) {
             refreshList(rev.getSet());
+            if(pid<0)
             setCurrentIndex(rev.getIdx());
         }
     }
@@ -306,10 +322,12 @@ public class Review extends ActionBarActivity implements SearchView.OnQueryTextL
     protected void onResume() {
         super.onResume();
         log("onResume");
-        list.clear();
-        currentIndex = -1;
-        requestNormalReviews();
+        if(pid<0) {
+            list.clear();
+            currentIndex = -1;
+            requestNormalReviews();
 
+        }
 
     }
 

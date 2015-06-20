@@ -48,7 +48,7 @@ public class Tags {
     public static final String REVIEW_READ_SINGLE="reviewreadsingle";
     public static final String REVIEW_READ_RANK ="reveiwreadrank";
     public static final String REVIEW_READ_SEARCH ="reviewreadsearch";
-    public static final String REVIEW_LIKE="reviewlike";
+    public static final String REVIEW_READ_RANKING_REVIEWS="reviewreadranking";
 
     public static final String SIGN_IN="usersignin";
     public static final String SIGN_UP="usersignup";

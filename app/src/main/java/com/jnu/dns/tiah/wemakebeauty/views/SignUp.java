@@ -265,7 +265,7 @@ public class SignUp extends ActionBarActivity {
 
         user = new UserItem(etEmail.getText().toString(), etPasswd.getText().toString(),
                 etNick.getText().toString(), etBirth.getText().toString(),
-                bytePhoto, Tags.AC, Tags.AD);
+                bytePhoto, -1, -1);
 
 
         log("request sign up " + user.getEmail() + " , " + user.getBirth() + " ");

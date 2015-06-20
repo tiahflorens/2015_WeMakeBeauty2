@@ -170,8 +170,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="type / tone"
-                    android:layout_marginRight="40dp"
+                    android:text="category"
+                    android:layout_marginRight="35dp"
                     android:id="@+id/textView31" />
 
                 <RadioGroup

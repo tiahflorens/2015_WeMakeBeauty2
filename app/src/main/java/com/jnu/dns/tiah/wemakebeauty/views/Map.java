@@ -217,13 +217,9 @@ public class Map extends ActionBarActivity { //fragment activity
     public void addMarker(EventItem e) {
         log("addMarker " + e.getBrand());
         LatLng latLng = new LatLng(e.getLat(), e.getLng());
-        MarkerOptions mOptions = new MarkerOptions().position(latLng).snippet(e.getDue() + "\n" + e.getMemo()).title(e.getBrand());
-
+        MarkerOptions mOptions = new MarkerOptions().position(latLng).snippet(e.getDue() + "\n" + e.getMemo()).title(e.getBrand()).icon(missha);
 
         //gMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
-
-
-        // mOptions.icon(missha);
         gMap.addMarker(mOptions);
     }
 
